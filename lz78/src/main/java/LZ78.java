@@ -34,7 +34,7 @@ public final class LZ78 {
                 final String prefix = safeSubString(input, position, prefixEnd);
                 assert prefix.length() >= 1;
                 log.debug("Trying to find prefix in dictionary: {} (length = {})", prefix, prefix.length());
-                char prefixChar = prefix.charAt(longestPrefixSoFar);
+                final char prefixChar = prefix.charAt(longestPrefixSoFar);
 
                 if (bestLeafSoFar.hasChild(prefixChar)) {
                     bestLeafSoFar = bestLeafSoFar.getChild(prefixChar);
@@ -92,7 +92,6 @@ public final class LZ78 {
             buffer.append(wordToAdd);
             // extend the table of words
             table.add(wordToAdd);
-            log.debug("Table of words extended: {}", wordToAdd);
         }
 
         return buffer.toString().toCharArray();
@@ -105,7 +104,7 @@ public final class LZ78 {
         int counter = 0;
         final Node root = new Node(counter++);
 
-        void extend(Node parent, char terminal) {
+        void extend(final Node parent, final char terminal) {
             parent.addChild(counter++, terminal);
         }
     }
@@ -119,16 +118,16 @@ public final class LZ78 {
             this.children = new LinkedHashMap<>();
         }
 
-        void addChild(int newId, char newTerminal) {
+        void addChild(final int newId, final char newTerminal) {
             assert !children.containsKey(newTerminal);
             children.put(newTerminal, new Node(newId));
         }
 
-        Node getChild(char terminal) {
+        Node getChild(final char terminal) {
             return children.get(terminal);
         }
 
-        boolean hasChild(char terminal) {
+        boolean hasChild(final char terminal) {
             return children.containsKey(terminal);
         }
     }
